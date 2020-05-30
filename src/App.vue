@@ -29,6 +29,7 @@
 </template>
 
 <script>
+	import 'vant/lib/index.less';
 	// 阻止默认事件
 	document.addEventListener('touchstart', function(e) {
 		e.preventDefault();
@@ -72,13 +73,17 @@
 		width: 100%;
 		height: 100%;
 		touch-action: none;
+		overflow-x: hidden;
 	}
 	.tabBottom {
+		z-index: 99;
 		position: fixed;
 		bottom: 0;
 		width: 100%;
+			background-color: white;
 		.tab {
 			display: flex;
+			height: 50px;
 			width: 100%;
 			justify-content: space-around;
 			div {
@@ -86,7 +91,6 @@
 				flex-direction: column;
 				font-size: 14px;
 				height: 55px;
-
 				.active {
 					color: rgb(236, 73, 100);
 				}
