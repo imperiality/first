@@ -7,6 +7,7 @@ import Classify from '../pages/Classify'
 import Buy from '../pages/Buy'
 import ShopCart from '../pages/ShopCart'
 import Person from '../pages/Person'
+import Formpage from '../pages/Formpage'
 export const constantRoutes = [
   // 404
   {
@@ -47,6 +48,13 @@ export const constantRoutes = [
     path: '/person',
     component: Person,
     name:'person',
+    componentShow:false
+  },
+  // 搜索页面
+  {
+    path: '/formpage',
+    component: Formpage,
+    name:'Formpage',
     componentShow:false
   },
 ]

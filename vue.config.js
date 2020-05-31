@@ -14,5 +14,18 @@ module.exports = {
   //   plugins: [
       
   //   ]
-  // }
+  // },
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'https://m.you.163.com/',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite:{
+          '^/api':''
+      }
+      }
+    }
+  }
+
 }
