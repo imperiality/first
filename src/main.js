@@ -8,6 +8,9 @@ import App from './App.vue'
 import router from './router'
 Vue.config.productionTip = false
 
+import ajax from './api/ajax'
+ajax.defaults.baseURL = '';
+Vue.prototype.$http=ajax;
 new Vue({
   render: h => h(App),
   router

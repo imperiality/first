@@ -1,5 +1,5 @@
 <script>
-import {baseSearchInfo} from '../../api'
+	import { baseSearchInfo } from '../../api';
 	export default {
 		name: 'Formpage',
 		data() {
@@ -11,20 +11,17 @@ import {baseSearchInfo} from '../../api'
     
     */
 		methods: {
-			toSearch() {
-				
+			toSearch() {},
+			cancel() {
+				this.$router.push({ name: 'home' });
 			},
-			cancel () {
-				this.$router.push({name:'home'})
+			async baseInfo() {
+				const result = await baseSearchInfo();
+				return result;
 			},
-			async	baseInfo(){
-				const result = await baseSearchInfo()
-				return result
-			}
 		},
 		mounted() {
-			
-			// console.log(this.baseInfo())
+			console.log(this.baseInfo());
 		},
 	};
 </script>
@@ -51,15 +48,15 @@ import {baseSearchInfo} from '../../api'
 </template>
 
 <style lang="less" rel="stylesheet/less" scope>
-.formpage{
-	background-color: #ededed;
-}
+	.formpage {
+		background-color: #ededed;
+	}
 	.downloadApp {
 		img {
 			width: 100%;
 		}
 	}
-	.search{
+	.search {
 		width: 100%;
 		height: 50px;
 		display: flex;
@@ -80,7 +77,7 @@ import {baseSearchInfo} from '../../api'
 				background-color: #ededed;
 			}
 		}
-		button{
+		button {
 			background-color: white;
 			border: none;
 			height: 40px;

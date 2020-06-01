@@ -1,6 +1,6 @@
 <template>
 	<div id="app" ref="app">
-		<router-view></router-view>
+		<router-view :currentPage='this.currentPage'></router-view>
 		<div class="tabBottom">
 			<mt-tabbar v-model="selected" class="tab">
 				<mt-tab-item id="tab1" @click.native="jump('home')">
@@ -34,7 +34,7 @@
 	document.addEventListener('touchstart', function(e) {
 		e.preventDefault();
 	});
-
+	
 	export default {
 		name: 'App',
 		components: {},
@@ -42,16 +42,22 @@
 			return {
 				selected: '首页',
 				currentPage:'home',
+				tab:''
 			};
 		},
 		methods: {
 			jump(tab) {
 				// console.log(this.$route.name,tab)
+				this.tab =tab;
 				if (this.$route.name !== tab) {
           this.$router.push({ name: tab });
           this.currentPage = tab
 				}
 			},
+		},
+	
+		mounted() {
+			this.currentPage = this.$route.name
 		},
 	};
 </script>
@@ -90,6 +96,7 @@
 				display: flex;
 				flex-direction: column;
 				font-size: 14px;
+				width: 50px;
 				height: 55px;
 				.active {
 					color: rgb(236, 73, 100);

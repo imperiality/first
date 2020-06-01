@@ -4,7 +4,7 @@ const ajax = axios.create({
 	baseURL: '/api',
 	timeout: 3000,
 });
-ajax.interceptors.request.use(config => config);
+ajax.interceptors.request.use((config) => config);
 
 ajax.interceptors.response.use(
 	(res) => {
@@ -15,4 +15,4 @@ ajax.interceptors.response.use(
 		return Promise.reject(err);
 	}
 );
-export default ajax
+export default ajax;

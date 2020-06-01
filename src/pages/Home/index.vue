@@ -1,18 +1,19 @@
 <script>
 	import Vue from 'vue';
-	import { Swipe, SwipeItem, Lazyload, Tab, Tabs, Popup } from 'vant';
+	import { Swipe, SwipeItem, Lazyload, Tab, Tabs, Popup ,CountDown } from 'vant';
 	Vue.use(Lazyload);
 	Vue.use(Swipe);
 	Vue.use(SwipeItem);
 	Vue.use(Tab);
 	Vue.use(Tabs);
 	Vue.use(Popup);
-
+	Vue.use(CountDown);
 	export default {
 		name: 'Home',
 		data() {
 			return {
 				undefault: false,
+				time: 30 * 60 * 60 * 1000,
 				current: 0,
 				title: [
 					'推荐',
@@ -366,6 +367,15 @@
 		<div class="timeToBuy">
 			<nav>
 				<span>限时购</span>
+				<van-count-down :time="time">
+					<template v-slot="timeData">
+						<span class="block">{{ timeData.hours }}</span>
+						<span class="colon">:</span>
+						<span class="block">{{ timeData.minutes }}</span>
+						<span class="colon">:</span>
+						<span class="block">{{ timeData.seconds }}</span>
+					</template>
+				</van-count-down>
 				<p></p>
 				<a href="">更多<i></i></a>
 			</nav>
@@ -637,6 +647,22 @@
 					width: 30%;
 				}
 			}
+		}
+		.timeToBuy{
+			.van-count-down{
+				display: flex;
+			.block{
+				display: block;
+				width: 18px;
+				height: 18px;
+				background-color: black;
+				color: white;
+			}
+			.colon{
+				margin: 0 3px;
+			}
+			}
+
 		}
 		footer {
 			background-color: #333;
