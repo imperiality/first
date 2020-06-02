@@ -3,22 +3,17 @@
 		name: 'section1',
 		data() {
 			return {
-				cateLists: [],
+				cateLists_: [],
 			};
 		},
-
-		methods: {
-			async reqData() {
-				const result = await this.$API.cateLists();
-				if (result.code === 200) {
-					this.cateLists = result.data[1].categoryList
-					console.log(result);
-				}
-			},
+    props: {
+      cateLists: {},
+      section:Number
 		},
 		mounted() {
-      this.reqData()
-      
+      // this.reqData()
+      this.cateLists_ =this.cateLists[this.section].categoryList
+      console.log(this.cateLists[0].categoryList,'000')
 		},
 	};
 </script>
@@ -27,7 +22,7 @@
 	<section class="section1">
     <img src="/image/giveyou.webp" alt="">
 		<ul v-if="cateLists">
-			<li class="" v-for="(item, index) in cateLists" :key="index">
+			<li class="" v-for="(item, index) in cateLists_" :key="index">
         <img :src="item.bannerUrl" alt="">
         <p>{{item.name}}</p>
       </li>

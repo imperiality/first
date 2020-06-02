@@ -42,7 +42,8 @@
 			return {
 				selected: '首页',
 				currentPage:'home',
-				tab:''
+				tab:'',
+				
 			};
 		},
 		methods: {
@@ -54,10 +55,12 @@
           this.currentPage = tab
 				}
 			},
+		
 		},
 	
 		mounted() {
 			this.currentPage = this.$route.name
+			
 		},
 	};
 </script>

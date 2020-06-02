@@ -29,14 +29,23 @@ module.exports = {
 		open: true,
 		proxy: {
 			'/node': {
-				target: 'http://localhost:4000/node/',
+        target: 'http://localhost:4000/node/',
+        ws:true,
 				changeOrigin: true,
 				pathRewrite: { '^/node': '' },
+      },
+      '/api': {
+				target: 'https://m.you.163.com/',
+				changeOrigin: true,
+				ws: true,
+				pathRewrite: {
+					'^/api': '',
+				},
 			},
 		},
 	},
 
-	runtimeCompiler: true,
+	// runtimeCompiler: true,
 };
 	// '/api': {
 			// 	target: 'https://m.you.163.com',

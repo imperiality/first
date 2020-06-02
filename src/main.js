@@ -8,6 +8,11 @@ import App from './App.vue'
 import router from './router'
 Vue.config.productionTip = false
 
+// var Event=new Vue();
+// Event.$emit(事件名,数据);
+// Event.$on(事件名,data => {});
+Vue.prototype.$bus =new Vue()
+
 import ajax from './api/ajax'
 ajax.defaults.baseURL = '';
 Vue.prototype.$http=ajax;

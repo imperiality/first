@@ -7,8 +7,8 @@ Vue.use(List);
 		name: 'Person',
 		data() {
 			return {
-        navData:{},
-         list: [],
+        navData:[],
+        
       loading: false,
       finished: false,
       };
@@ -26,10 +26,12 @@ Vue.use(List);
       },
       async navWap () {
         const result = await this.$API.navWap()
-        this.navData = result.data
+        this.navData = result.data.navList
       },
       onLoad(){
-
+         if (this.list.length >= 1) {
+          this.finished = true;
+        }
       }
     },
 	};
@@ -43,12 +45,18 @@ Vue.use(List);
       <router-link to='/search' class="iconfont icon-search"></router-link>
 			<router-link to="/cart" class="iconfont icon-gouwuchekong"></router-link>
 		</header>
-    <img src="/image/Buy/ia_100000001.png" alt="" class="bg">
-    <img src="/image/Buy/ia_100000000.png" alt="">
-    <div class="text">严选好物 用心生活</div>
+    <div class="bg">
+      <img src="/image/Buy/ia_100000001.png" alt="" class="bg1">
+      <img src="/image/Buy/ia_100000000.png" alt="" class="bg2">
+      <span class="text">严选好物 用心生活</span>
+    </div>
     <div class="nav">
-      <ul>
-        <li class="li"></li>
+      <ul v-if="navData.length>0">
+        <li class="li" v-for="item in navData" :key="item.id">
+          <img :src="item.picUrl" alt="">
+          <p>{{item.mainTitle}}</p>
+          <span>{{item.viceTitle}}</span>
+        </li>
       </ul>
     </div>
     <van-list
@@ -57,7 +65,7 @@ Vue.use(List);
   finished-text="没有更多了"
   @load="onLoad"
 >
-  <van-cell v-for="item in list" :key="item" :title="item" />
+  <van-cell v-for="item in navData" :key="item.id" :title="item.mainTitle" />
 </van-list>
 	</div>
 </template>
@@ -75,14 +83,32 @@ Vue.use(List);
         margin-left: 40px;
       }
       a{
-        font-size: 40px;
+        font-size: 30px;
         display: block;
         width: 50px;
         height: 50px;
+        line-height: 50px;
       }
     }
     .bg{
       width: 100%;
+      position: relative;
+      .bg1{
+        width: 100%;
+      }
+      .bg2{
+        width: 65px;
+        position: absolute;
+        top: 20px;
+        left: 10px;
+      }
+      .text{
+        position: absolute;
+        top: 30px;
+        left: 75px;
+        color: #fff;
+      }
     }
+    
 	}
 </style>
