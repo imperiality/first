@@ -24,11 +24,11 @@
 </script>
 
 <template>
-	<section class="section1">
-		<img src="/image/giveyou.webp" alt="" />
+	<section class="section0">
+		<img src="/image/giveyou.webp" alt="" class="img1" />
 		<ul v-if="cateLists">
 			<li class="" v-for="(item, index) in cateLists" :key="index">
-				<img :src="item.bannerUrl" alt="" />
+				<img :src="item.bannerUrl"  alt="" />
 				<p>{{ item.frontName }}</p>
 			</li>
 		</ul>
@@ -36,26 +36,5 @@
 </template>
 
 <style lang="less" rel="stylesheet/less" scope>
-	.section1 {
-		img {
-			width: 265px;
-		}
-		ul {
-			padding: 20px;
-			display: flex;
-			flex-wrap: wrap;
-			font-size: 12px;
-			width: 60%;
-			li {
-				width: 80px;
-				img {
-					width: 77px;
-					height: 77px;
-				}
-				p {
-					text-align: center;
-				}
-			}
-		}
-	}
+	
 </style>

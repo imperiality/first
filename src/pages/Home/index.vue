@@ -21,7 +21,7 @@
 		name: 'Home',
 		data() {
 			return {
-				undefault: false,
+				undefault: true,
 				time: 30 * 60 * 60 * 1000,
 				current: 0,
 				title: [
@@ -96,22 +96,24 @@
 				});
 			},
 			toSearch() {
-				this.showFormpage=true
+				this.showFormpage = true;
 			},
-		
 		},
 		mounted() {
-			
-			
 			// 监听滚动事件
 			window.addEventListener('scroll', this.getScroll, true);
+		},
+		/* eslint-disable-next-line */
+		beforeRouteLeave(to, from, next) {
+			window.removeEventListener('scroll', this.getScroll,true);
+			next()
 		},
 	};
 </script>
 
 <template>
 	<div class="home" id="top">
-		<Formpage v-if="this.showFormpage"  route='home' />
+		<Formpage v-if="this.showFormpage" route="home" />
 		<div v-else class="inner">
 			<div class="downloadApp" id="downloadApp">
 				<img
@@ -126,6 +128,15 @@
 						<i class="iconfont icon-search"></i>
 						<span class="placeholder">搜索商品, 共28263款好物</span>
 					</div>
+					<div class="undefault" v-if="isShow">
+						<div class="all">全部频道</div>
+						<ul class="content">
+							<li class="nav1" v-for="(item, index) in title" :key="index">
+								{{ item }}
+							</li>
+						</ul>
+						<div class="mask"></div>
+					</div>
 					<button class="btn">登录</button>
 				</div>
 				<div class="bottom mounted">
@@ -139,26 +150,6 @@
 						</van-tab>
 					</van-tabs>
 					<button class="iconfont icon-xia" @click="show"></button>
-					<van-popup
-						v-model="isShow"
-						get-container="header"
-						position="top"
-						style="top:30%"
-						class="popup"
-						:style="{ height: '30%' }"
-						>内容</van-popup
-					>
-					<ul class="undefault" v-if="undefault">
-						<li class="nav1">推荐</li>
-						<li class="nav1">居家生活</li>
-						<li class="nav1">服饰鞋包</li>
-						<li class="nav1">美食酒水</li>
-						<li class="nav1">个护清洁</li>
-						<li class="nav1">母婴亲子</li>
-						<li class="nav1">运动旅行</li>
-						<li class="nav1">数码家电</li>
-						<li class="nav1">严选全球</li>
-					</ul>
 				</div>
 			</header>
 			<van-swipe
@@ -314,79 +305,52 @@
 				<nav>类目热销榜</nav>
 				<ul>
 					<li class="hot1">
-						<p>热销榜</p>
+						<span>热销榜</span>
 						<img src="/image/1.webp" alt="" />
 					</li>
 					<li class="hot2">
-						<p>好评榜</p>
+						<span>好评榜</span>
 						<img src="/image/2.webp" alt="" />
 					</li>
 					<li class="hot3">
-						<p>居家生活榜</p>
+						<span>居家生活榜</span>
 						<img src="/image/1 (1).webp" alt="" />
 					</li>
 					<li class="hot4">
-						<p>美食酒水榜</p>
+						<span>美食酒水榜</span>
 						<img src="/image/1 (2).webp" alt="" />
 					</li>
 					<li class="hot5">
-						<p>服饰鞋包榜</p>
+						<span>服饰鞋包榜</span>
 						<img src="/image/1 (3).webp" alt="" />
 					</li>
 					<li class="hot6">
-						<p>个护清洁榜</p>
+						<span>个护清洁榜</span>
 						<img src="/image/1 (4).webp" alt="" />
 					</li>
 					<li class="hot7">
-						<p>数码家电榜</p>
+						<span>数码家电榜</span>
 						<img src="/image/1 (5).webp" alt="" />
 					</li>
 					<li class="hot8">
-						<p>母婴亲子榜</p>
+						<span>母婴亲子榜</span>
 						<img src="/image/1 (6).webp" alt="" />
 					</li>
 					<li class="hot9">
-						<p>严选全球榜</p>
+						<span>严选全球榜</span>
 						<img src="/image/1 (7).webp" alt="" />
 					</li>
 					<li class="hot10">
-						<p>运动旅行榜</p>
+						<span>运动旅行榜</span>
 						<img src="/image/1 (8).webp" alt="" />
 					</li>
 				</ul>
 			</div>
-			<div class="recommend">
-				<nav>
-					<p>人气推荐</p>
-					<a>更多<i></i></a>
-				</nav>
-				<div class="recommend1">
-					<img src="/image/ia_200000035.webp" alt="" />
-					<div class="name">15分钟快速救脸，射频多功能美容仪</div>
-					<div class="desc">掌心里的“美容院”</div>
-					<div class="price">¥899</div>
-				</div>
-				<div class="recommend2">
-					<img src="/image/ia_200000036.webp" alt="" />
-					<p class="name">晶彩合金筷 6双装</p>
-					<p class="price"></p>
-				</div>
-				<div class="recommend3">
-					<img src="/image/ia_200000037.webp" alt="" />
-					<p class="name">【抢购】一次性医用口罩 1...</p>
-					<p class="price"></p>
-				</div>
-				<div class="recommend4">
-					<img src="/image/ia_200000038.webp" alt="" />
-					<p class="name">整晚减压好眠 93% 泰国...</p>
-					<p class="price"></p>
-				</div>
-			</div>
 			<div class="timeToBuy">
 				<nav>
-					<span>限时购</span>
 					<van-count-down :time="time">
 						<template v-slot="timeData">
+							<a>限时购</a>
 							<span class="block">{{ timeData.hours }}</span>
 							<span class="colon">:</span>
 							<span class="block">{{ timeData.minutes }}</span>
@@ -397,71 +361,75 @@
 					<p></p>
 					<a href="">更多<i></i></a>
 				</nav>
-				<div class="buy1">
-					<img src="/image/ia_200000039.webp" alt="" />
-					<span class="new"></span>
-					<span class="old"></span>
-				</div>
-				<div class="buy2">
-					<img src="/image/ia_200000040.webp" alt="" />
-					<span class="new"></span>
-					<span class="old"></span>
-				</div>
-				<div class="buy3">
-					<img src="/image/ia_200000041.webp" alt="" />
-					<span class="new"></span>
-					<span class="old"></span>
-				</div>
-				<div class="buy4">
-					<img src="/image/ia_200000042.webp" alt="" />
-					<span class="new"></span>
-					<span class="old"></span>
-				</div>
-				<div class="buy5">
-					<img src="/image/ia_200000043.webp" alt="" />
-					<span class="new"></span>
-					<span class="old"></span>
-				</div>
-				<div class="buy6">
-					<img src="/image/ia_200000044.webp" alt="" />
-					<span class="new"></span>
-					<span class="old"></span>
+				<div class="buy">
+					<div class="buy1">
+						<img src="/image/ia_200000039.webp" alt="" />
+						<span class="new">¥79</span>
+						<span class="old">¥116</span>
+					</div>
+					<div class="buy2">
+						<img src="/image/ia_200000040.webp" alt="" />
+						<span class="new">¥54.5</span>
+						<span class="old">¥69</span>
+					</div>
+					<div class="buy3">
+						<img src="/image/ia_200000041.webp" alt="" />
+						<span class="new">¥129</span>
+						<span class="old">¥199</span>
+					</div>
+					<div class="buy4">
+						<img src="/image/ia_200000042.webp" alt="" />
+						<span class="new">¥199</span>
+						<span class="old">¥249</span>
+					</div>
+					<div class="buy5">
+						<img src="/image/ia_200000043.webp" alt="" />
+						<span class="new">¥999</span>
+						<span class="old">¥1499</span>
+					</div>
+					<div class="buy6">
+						<img src="/image/ia_200000044.webp" alt="" />
+						<span class="new">¥49.9</span>
+						<span class="old">¥79.9</span>
+					</div>
 				</div>
 			</div>
 			<div class="newShop">
 				<nav>
-					<p></p>
+					<p>新品首发</p>
 					<a href=""><i></i></a>
 				</nav>
-				<div class="newShop1">
-					<img src="/image/ia_100000046.webp" alt="" />
-					<p>手撕魔方酵母面包</p>
-					<span></span>
-				</div>
-				<div class="newShop2">
-					<img src="/image/ia_100000049.webp" alt="" />
-					<p>拒绝慢性烂脸，化妆刷除菌收纳筒</p>
-					<span></span>
-				</div>
-				<div class="newShop3">
-					<img src="/image/ia_100000047.webp" alt="" />
-					<p>夏日桌面清凉伴侣，超静音桌面小风扇</p>
-					<span></span>
-				</div>
-				<div class="newShop4">
-					<img src="/image/111.webp" alt="" />
-					<p>真丝般睡感，儿童60支全棉贡缎三件套</p>
-					<span></span>
-				</div>
-				<div class="newShop5">
-					<img src="/image/ia_100000048.webp" alt="" />
-					<p>轻盈柔软如睡云端 天然乳胶透气夏凉被</p>
-					<span></span>
-				</div>
-				<div class="newShop6">
-					<img src="/image/ia_100000045.webp" alt="" />
-					<p>仲夏夜之梦，西班牙莫斯卡托甜白起泡酒</p>
-					<span></span>
+				<div class="shop">
+					<div class="newShop1">
+						<img src="/image/ia_100000046.webp" alt="" />
+						<p>手撕魔方酵母面包</p>
+						<span></span>
+					</div>
+					<div class="newShop2">
+						<img src="/image/ia_100000049.webp" alt="" />
+						<p>拒绝慢性烂脸，化妆刷除菌收纳筒</p>
+						<span></span>
+					</div>
+					<div class="newShop3">
+						<img src="/image/ia_100000047.webp" alt="" />
+						<p>夏日桌面清凉伴侣，超静音桌面小风扇</p>
+						<span></span>
+					</div>
+					<div class="newShop4">
+						<img src="/image/111.webp" alt="" />
+						<p>真丝般睡感，儿童60支全棉贡缎三件套</p>
+						<span></span>
+					</div>
+					<div class="newShop5">
+						<img src="/image/ia_100000048.webp" alt="" />
+						<p>轻盈柔软如睡云端 天然乳胶透气夏凉被</p>
+						<span></span>
+					</div>
+					<div class="newShop6">
+						<img src="/image/ia_100000045.webp" alt="" />
+						<p>仲夏夜之梦，西班牙莫斯卡托甜白起泡酒</p>
+						<span></span>
+					</div>
 				</div>
 			</div>
 			<a @click="backTop" id="backTop"
@@ -482,8 +450,9 @@
 		width: 100%;
 		height: 100%;
 		position: relative;
-		.inner{
+		.inner {
 			height: 100%;
+			width: 100%;
 			.none {
 				height: 18%;
 			}
@@ -502,7 +471,7 @@
 				background-color: white;
 				top: 7%;
 				z-index: 9;
-	
+
 				.top {
 					width: 95%;
 					height: 30px;
@@ -510,6 +479,48 @@
 					justify-content: space-between;
 					align-items: center;
 					padding: 7px 10px;
+					position: relative;
+					.undefault {
+						position: absolute;
+						background-color: white;
+						padding: 0;
+						top: 40px;
+						left: 0;
+						z-index: 2;
+						width: 100%;
+						height: 180px;
+						font-size: 14px;
+						.all {
+							line-height: 40px;
+							text-align: left;
+							padding-left: 20px;
+							height: 40px;
+							background-color: white;
+							padding: 0 0 0 20px;
+						}
+						.mask {
+							height: 500px;
+							width: 100%;
+							padding: 0;
+							background-color: rgba(0, 0, 0, 0.6);
+						}
+						.content {
+							background-color: white;
+							display: flex;
+							flex-wrap: wrap;
+							justify-content: start;
+							height: 180px;
+							li {
+								width: 75px;
+								height: 25px;
+								background-color: #eee;
+								line-height: 25px;
+								border: 1px solid #ccc;
+								border-radius: 3px;
+								margin: 0 0 15px 14px;
+							}
+						}
+					}
 					div {
 						width: 210px;
 						height: 20px;
@@ -539,6 +550,7 @@
 				.bottom {
 					float: left;
 					position: relative;
+
 					.tabs > div {
 						height: 30px;
 					}
@@ -571,7 +583,7 @@
 			.my-swipe {
 				width: 100%;
 				height: 160px;
-				
+
 				img {
 					width: 100%;
 					height: 160px;
@@ -639,7 +651,7 @@
 				li {
 					width: 60px;
 					margin: 5px 5px;
-	
+
 					img {
 						display: inline-block;
 						width: 55px;
@@ -663,7 +675,7 @@
 						width: 95%;
 					}
 				}
-	
+
 				.discount {
 					img {
 						margin: 4px;
@@ -671,19 +683,51 @@
 					}
 				}
 			}
-			.gift{
-				float: left;
-				.img1{
-					width: 130px;
+			.gift {
+				// overflow: hidden;
+				padding: 0 10px;
+				div {
+					float: left;
+					width: 160px;
+					padding: 15px 0 0 15px;
+					background-color: #f9e9cf;
+					// position: relative;
+					p {
+						text-align: left;
+					}
 				}
-				nav{
+				.desc1 {
+					margin-right: 2px;
+					height: 215px;
+				}
+				.desc3,
+				.desc2 {
+					height: 100px;
+				}
+				.desc3 {
+					margin-top: 2px;
+				}
+				.img1 {
+					width: 130px;
+					position: relative;
+					top: 20px;
+				}
+				.img2,
+				.img3 {
+					width: 100px;
+					height: 100px;
+					position: relative;
+					top: -30px;
+					right: -30px;
+				}
+				nav {
 					height: 45px;
 					line-height: 45px;
 					width: 100%;
-					span{
+					span {
 						font-weight: normal;
 						margin: 0 10px;
-						&::before{
+						&::before {
 							content: '';
 							display: inline-block;
 							height: 20px;
@@ -693,7 +737,7 @@
 							border: 1px solid #000;
 							-webkit-transform: rotate(90deg);
 						}
-						&::after{
+						&::after {
 							content: '';
 							display: inline-block;
 							height: 20px;
@@ -706,18 +750,121 @@
 					}
 				}
 			}
-			.timeToBuy {
-				.van-count-down {
-					display: flex;
-					.block {
-						display: block;
-						width: 18px;
-						height: 18px;
-						background-color: black;
-						color: white;
+			.hot {
+				padding: 0 11px;
+				nav {
+					height: 50px;
+					line-height: 50px;
+					text-align: left;
+					width: 100%;
+				}
+
+				.hot1,
+				.hot2 {
+					height: 100px;
+					width: 173px;
+					font-size: 14px;
+					span {
+						margin: 30px 0 0 20px;
+						float: left;
 					}
-					.colon {
-						margin: 0 3px;
+					img {
+						height: 100px;
+					}
+				}
+				li {
+					background-color: #f5f5f5;
+					float: left;
+					margin: 0 3px 3px 0;
+					width: 85px;
+					height: 90px;
+					font-size: 12px;
+					img {
+						height: 60px;
+					}
+				}
+			}
+			.timeToBuy {
+				padding: 0 0 0 10px;
+				nav {
+					display: flex;
+					width: 100%;
+					height: 50px;
+					justify-content: space-between;
+					a {
+						display: block;
+						width: 70px;
+						height: 50px;
+						line-height: 50px;
+					}
+
+					.van-count-down {
+						display: flex;
+						height: 50px;
+
+						.block {
+							margin-top: 16px;
+							display: block;
+							width: 18px;
+							height: 18px;
+							background-color: black;
+							color: white;
+						}
+						.colon {
+							margin: 16px 3px;
+						}
+					}
+				}
+				.buy {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: center;
+					div {
+						width: 108px;
+						height: 150px;
+						margin-right: 10px;
+						float: left;
+						img {
+							height: 108px;
+							background-color: #eee;
+						}
+						span {
+							font-size: 12px;
+						}
+						.new {
+							color: red;
+							margin-right: 5px;
+						}
+						.old {
+							text-decoration: line-through;
+							color: #aaa;
+						}
+					}
+				}
+			}
+			.newShop {
+				padding: 0 10px 20px 10px;
+				nav {
+					text-align: left;
+					height: 50px;
+					line-height: 50px;
+					padding-left: 10px;
+				}
+				.shop {
+					font-size: 14px;
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-around;
+					div {
+						width: 108px;
+						p {
+							display: inline-block;
+							text-overflow: ellipsis;
+						}
+						img {
+							background-color: #eee;
+							height: 108px;
+						}
 					}
 				}
 			}

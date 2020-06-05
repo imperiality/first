@@ -1,4 +1,6 @@
 <script>
+/* eslint-disable */
+
 	import { Notify } from 'vant';
 	import Vue from 'vue';
 	import { Sidebar, SidebarItem } from 'vant';
@@ -9,15 +11,6 @@
 	import Section0 from './section0';
 	import Section1 from './section1';
 	import Section2 from './section2';
-	import Section3 from './section3';
-	import Section4 from './section4';
-	import Section5 from './section5';
-	import Section6 from './section6';
-	import Section7 from './section7';
-	import Section8 from './section8';
-	import Section9 from './section9';
-	import Section10 from './section10';
-	import Section11 from './section11';
 
 	import Formpage from '../Formpage';
 	export default {
@@ -37,15 +30,6 @@
 			Section0,
 			Section1,
 			Section2,
-			Section3,
-			Section4,
-			Section5,
-			Section6,
-			Section7,
-			Section8,
-			Section9,
-			Section10,
-			Section11,
 		},
 		methods: {
 			async cateNavDatas() {
@@ -111,89 +95,16 @@
 						:key="index"
 					/>
 				</van-sidebar>
-				<Section0
-					class="bar0"
+				<Section0 class="bar0"
 					v-if="this.section === 0"
 					:cateLists="cateLists"
 					:section="section"
 					>0</Section0
 				>
 				<Section1
-					class="bar1"
-					v-if="this.section === 1"
-					:cateLists="cateLists"
-					:section="section"
+					v-if="item.categoryList && index === section" v-for="(item, index) in cateLists" :key="index" :cateLists="cateLists" :section="section"
 				></Section1>
-				<Section2
-					class="bar2"
-					v-if="this.section === 2"
-					:cateLists="cateLists"
-					:section="section"
-					>2</Section2
-				>
-				<Section3
-					class="bar3"
-					v-if="this.section === 3"
-					:cateLists="cateLists"
-					:section="section"
-					>3</Section3
-				>
-				<Section4
-					class="bar4"
-					v-if="this.section === 4"
-					:cateLists="this.cateLists"
-					:section="section"
-					>4</Section4
-				>
-				<Section5
-					class="bar5"
-					v-if="this.section === 5"
-					:cateLists="cateLists"
-					:section="section"
-					>5</Section5
-				>
-				<Section6
-					class="bar6"
-					v-if="this.section === 6"
-					:cateLists="cateLists"
-					:section="section"
-					>6</Section6
-				>
-				<Section7
-					class="bar7"
-					v-if="this.section === 7"
-					:cateLists="cateLists"
-					:section="section"
-					>7</Section7
-				>
-				<Section8
-					class="bar8"
-					v-if="this.section === 8"
-					:cateLists="cateLists"
-					:section="section"
-					>8</Section8
-				>
-				<Section9
-					class="bar9"
-					v-if="this.section === 9"
-					:cateLists="cateLists"
-					:section="section"
-					>9</Section9
-				>
-				<Section10
-					class="bar10"
-					v-if="this.section === 10"
-					:cateLists="cateLists"
-					:section="section"
-					>10</Section10
-				>
-				<Section11
-					class="bar11"
-					v-if="this.section === 11"
-					:cateLists="cateLists"
-					:section="section"
-					>11</Section11
-				>
+				<Section2 v-if="item.subCateList && section === index" v-for="(item, index) in cateLists" :key="index" :cateLists="cateLists" :section="section"/>
 			</div>
 			<div class="null"></div>
 		</div>
@@ -249,6 +160,7 @@
 		.box {
 			display: flex;
 			overflow: scroll;
+			width: 100%;
 			.sideBar {
 				margin: 0;
 				width: 80px;
@@ -262,13 +174,21 @@
 			}
 			section {
 				margin: 100px 0 0 80px;
-				width: 79%;
+				width: 100%;
+				overflow-x: hidden;
+				img {
+					width: 265px;
+				}
+				&.img1{
+					margin-left: 10px;
+				}
 				ul {
-					padding: 0px 20px;
+					padding: 0px 0 20px 20px;
 					display: flex;
 					flex-wrap: wrap;
 					font-size: 12px;
-					width: 87%;
+					width: 93%;
+					
 					li {
 						width: 80px;
 						img {

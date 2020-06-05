@@ -48,6 +48,9 @@
 		},
 		methods: {
 			jump(tab) {
+				if (tab==='classify') {
+					window.removeEventListener('scroll',this.getScroll,true)
+				}
 				// console.log(this.$route.name,tab)
 				this.tab =tab;
 				if (this.$route.name !== tab) {
@@ -82,7 +85,6 @@
 		width: 100%;
 		height: 100%;
 		touch-action: none;
-		overflow-x: hidden;
 	}
 	.tabBottom {
 		z-index: 99;
