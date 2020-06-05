@@ -21,7 +21,6 @@ export default {
 </script>
 
 <template>
-
   <div class="cart">
     <img class="picUrl" :src="picUrl" v-if="appBanHeight"  alt="">
     <div class="title">{{title}}</div>
@@ -36,7 +35,6 @@ export default {
       <span class="buyNow">去购买<i class="iconfont icon-weibiaoti34"></i></span>
     </div>
   </div>
-
 </template>
 
 <style lang='less' rel='stylesheet/less' scope>
@@ -45,9 +43,10 @@ export default {
     margin-top: 10px;
     background-color: white;
     width: 173px;
-    display: inline-block;
+    margin: 10px 7px;
     border-radius:10px;
-    height: min-content;
+    
+    // vertical-align: top;
     .title{
       padding: 10px 8px 0 8px;
       font-size: 14px;
@@ -55,7 +54,6 @@ export default {
     }
     .picUrl{
       width: 173px;
-      max-height: max-content;
       border-radius: 10px 10px 0 0;
     }
     .avatar{

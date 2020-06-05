@@ -13,12 +13,6 @@ import Section1 from '../pages/Classify/section1'
 import Section2 from '../pages/Classify/section2'
 
 export const constantRoutes = [
-  // 404
-  {
-    path: '/404',
-    component: () => import('../404'),
-    hidden: true
-  },
   // 首页
   {
     path: '/',

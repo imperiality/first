@@ -15,8 +15,6 @@
 				list: [],
 				page: 2,
 				size: 5,
-
-		
 			};
 		},
 		components: {
@@ -142,25 +140,43 @@
 				:finished="finished"
 				finished-text="没有更多了"
 				@load="onLoad"
-				offset=20
-				class="van-clearfix"
 			>
-					<Cart
-						v-for="(item, index) in list"
-						:key="index"
-						:toBuy="item.toBuy"
-						:appBanHeight="item.appBanHeight"
-						:picUrl="item.picUrl"
-						:appBanWidth="item.appBanWidth"
-						:avatar="item.avatar"
-						:buyNow="item.buyNow"
-						:nickname="item.nickname"
-						:readCount="item.readCount"
-						:title="item.title"
-					/>
+				<div class="center van-clearfix">
+					<div class="van-clearfix left">
+						<Cart
+							v-for="(item, index) in list"
+							v-show="index % 2 === 1"
+							:key="index"
+							:toBuy="item.toBuy"
+							:appBanHeight="item.appBanHeight"
+							:picUrl="item.picUrl"
+							:appBanWidth="item.appBanWidth"
+							:avatar="item.avatar"
+							:buyNow="item.buyNow"
+							:nickname="item.nickname"
+							:readCount="item.readCount"
+							:title="item.title"
+						/>
+					</div>
+					<div class="van-clearfix right">
+						<Cart
+							v-for="(item, index) in list"
+							v-show="index % 2 === 0"
+							:key="index"
+							:toBuy="item.toBuy"
+							:appBanHeight="item.appBanHeight"
+							:picUrl="item.picUrl"
+							:appBanWidth="item.appBanWidth"
+							:avatar="item.avatar"
+							:buyNow="item.buyNow"
+							:nickname="item.nickname"
+							:readCount="item.readCount"
+							:title="item.title"
+						/>
+					</div>
+				</div>
 			</van-list>
 		</div>
-	
 	</div>
 </template>
 
@@ -168,7 +184,7 @@
 	.buy {
 		position: relative;
 		background-color: #eee;
-		
+
 		.longList {
 			position: absolute;
 			top: 350px;
@@ -176,17 +192,19 @@
 			background-color: #eee;
 			// height: 667px;
 			.van-list {
-				background-color: #eee;			
+				background-color: #eee;
 				padding-bottom: 50px;
-				// display: flex;
-				.left,
-				.right {
-					background-color: #eee;
-					// height: 667px;
-					width: 177px;
+				font-size: 0;
+				.van-clearfix {
+					overflow: hidden;
 				}
-				
-			
+
+				.left{
+					float: left;
+				}
+				.right{
+					float: right;
+				}
 			}
 		}
 		header {
